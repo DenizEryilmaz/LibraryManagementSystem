@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from library import Library
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 lib = Library()
@@ -86,6 +88,42 @@ def remove_book_confirm():
         return redirect(url_for('remove_book_options'))
 
 
+from bs4 import BeautifulSoup
+import requests
+
+@app.route('/book_detail/<book_name>')
+def book_detail(book_name):
+    book_details = get_book_details(book_name)
+    if book_details:
+        return render_template('book_detail.html', book_details=book_details)
+    else:
+        return render_template('detail_not_found.html')
+
+def get_book_details(book_name):
+    url = f"https://www.goodreads.com/search?q={book_name}&search_type=books"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        first_book_link = soup.find("a", class_="bookTitle", href=True)
+
+        if first_book_link:
+            book_url = "https://www.goodreads.com" + first_book_link['href']
+            book_response = requests.get(book_url)
+
+            if book_response.status_code == 200:
+                book_soup = BeautifulSoup(book_response.text, 'html.parser')
+                image = book_soup.find("img", class_="ResponsiveImage")
+                book_image = image['src'] if image else "No image available"
+                summary = book_soup.find("span", class_="Formatted")
+                book_summary = summary.text.strip() if summary else "No summary available"
+
+                return {
+                    "image": book_image,
+                    "summary": book_summary
+                }
+
+    return None
 
 
 if __name__ == '__main__':
