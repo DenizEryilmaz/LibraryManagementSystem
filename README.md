@@ -1,9 +1,11 @@
 # Librart Management System
 Bu uygulama, Akbank Yeni Nesil Proje Kampı için geliştirilmiş olan basit bir kütüphane yönetimi uygulamasıdır.
-    
-### Gerekli kütüphaneleri kurun:
-pip install flask
 
+##### Webde kullanıldığı durumda kitap özetleri sayfalarına da erişilebilir.
+### Gerekli kütüphaneleri kurun:
+    pip install flask
+    pip install requests
+    pip install beautifulsoup4
 Uygulama webde ve konsolda çalışmaktadır.
 
 Konsolda kullanmak için
