@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://kultur.istanbul/gorsel/2022/03/kapak.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 0.8);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+        color:white;
+        background-color: rgba(51, 68, 105, 0.2);
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 50%;
+            padding: 20px;
+            background-color: rgba(51, 68, 105, 0.2);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+        }
+
+        label {
+
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #334466;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p.error {
+        background-color: rgba(51, 68, 105, 1);
+            color: white;
+        }
+
+        .btn-home {
+            width: 150px;
+            margin: 20px auto;
+            background-color: rgba(51, 68, 105, 1);
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kitap Ekle</h1>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <form action="{{ url_for('add_book') }}" method="POST">
+        <label for="title">Kitap Adı:</label>
+        <input type="text" id="title" name="title"><br><br>
+        <label for="author">Yazarı:</label>
+        <input type="text" id="author" name="author"><br><br>
+        <label for="release_year">Yılı:</label>
+        <input type="text" id="release_year" name="release_year"><br><br>
+        <label for="num_pages">Sayfa Sayısı:</label>
+        <input type="text" id="num_pages" name="num_pages"><br><br>
+        <input type="submit" value="Kitap Ekle">
+    </form>
+    <a href="{{ url_for('index') }}" class="btn-home">Ana Sayfaya Dön</a>
+</body>
+</html>

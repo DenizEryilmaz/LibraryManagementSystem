@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://cdn.pixabay.com/photo/2017/08/11/09/11/books-2630076_960_720.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .book-count {
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-danger {
+            background-color: #334466;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-home {
+            display: block;
+            width: 150px;
+            margin: 20px auto;
+            text-align: center;
+            background-color: #334466;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kitapları Listele</h1>
+    <div class="book-count">Toplam {{ books|length }} kitap bulunmaktadır.</div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Kitap Adı</th>
+            <th>Yazarı</th>
+            <th>Yılı</th>
+            <th>Sayfa Sayısı</th>
+            <th>İşlem</th>
+        </tr>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.year }}</td>
+                <td>{{ book.pages }}</td>
+                <td>
+                    <form action="{{ url_for('remove_book') }}" method="post">
+                        <input type="hidden" name="id_or_title" value="{{ book.id }}">
+                        <button type="submit" class="btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('index') }}" class="btn-home">Ana Sayfaya Dön</a>
+</body>
+</html>

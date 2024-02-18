@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://kultur.istanbul/gorsel/2022/03/kapak.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 0.8);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 50%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+            background-color: rgba(51, 68, 105, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        form {
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(51, 68, 105, 0.2);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], button[type="submit"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #334466;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            text-align: center;
+            color: red;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            width: 100%;
+        }
+
+        li {
+            background-color: #fff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        li:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-home {
+            display: block;
+            width: 150px;
+            margin: 20px auto;
+            text-align: center;
+            background-color: #334466;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Remove Book</h1>
+        <form action="/remove_book" method="post">
+            <label for="id_or_title">Silmek istediğiniz kitabın Adı Ya da ID'sini giriniz:</label>
+            <input type="text" id="id_or_title" name="id_or_title">
+            <button type="submit">Gönder</button>
+        </form>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+        {% if books %}
+            <h2>Kitaplar</h2>
+            <ul>
+                {% for book in books %}
+                    <li>ID: {{ book[0] }}, Kitap Adı: {{ book[1] }}, Yazarı: {{ book[2] }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="btn-home">Ana Sayfaya Dön</a>
+    </div>
+</body>
+</html>
