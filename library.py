@@ -10,8 +10,8 @@ class Library:
         self.file.seek(0)
         return self.file.read().splitlines()
 
-    def add_book(self, title, author, release_year, num_pages):
-        if not all([title, author, release_year, num_pages]):
+    def add_book(self, title, author, release_year, num_pages, category):
+        if not all([title, author, release_year, num_pages, category]):
             return "Eksik bilgi. Lütfen tüm alanları doldurun."
         try:
             int(release_year)
@@ -31,7 +31,7 @@ class Library:
         max_id = max(int(book_info[0]) for book_info in books) if books else 0
         new_id = max_id + 1
 
-        self.file.write(f"{new_id}, {title}, {author}, {release_year}, {num_pages}\n")
+        self.file.write(f"{new_id}, {title}, {author}, {release_year}, {num_pages}, {category}\n")
         return "Kitap başarıyla eklendi."
 
     def remove_book(self, input_value):
@@ -94,8 +94,11 @@ class Library:
             book_id = book_info[0].strip()
             book_title = book_info[1].strip()
             book_author = book_info[2].strip()
-            book_info_dict[book_id] = (book_title, book_author, book_info[3].strip(), book_info[4].strip())
-            print(f"ID: {book_id}, Kitap Adı: {book_title}, Yazarı: {book_author}")
+            book_release_year = book_info[3].strip()
+            book_num_pages = book_info[4].strip()
+            book_category = book_info[5].strip()
+            book_info_dict[book_id] = (book_title, book_author, book_release_year, book_num_pages, book_category)
+            print(f"ID: {book_id}, Kitap Adı: {book_title}, Yazarı: {book_author}, Kategori: {book_category}")
 
         user_input = input(
             "Kitap hakkında daha fazla bilgi almak için ID'sini giriniz, ana menüye dönmek için 'x'i tuşlayınız: ")
@@ -108,6 +111,7 @@ class Library:
                 print(f"Yazarı: {book_info[1]}")
                 print(f"Yılı: {book_info[2]}")
                 print(f"Sayfa sayısı: {book_info[3]}")
+                print(f"Kategori: {book_info[4]}")
                 while True:
                     action = input("Seçili kitabı silmek için 'r' , Ana menüye dönmek için 'x' yazınız: ")
                     if action.lower() == "r":
@@ -140,7 +144,8 @@ class Library:
                 author = input("Yazarı: ")
                 release_year = input("Yılı: ")
                 num_pages = input("Sayfa Sayısı: ")
-                result = self.add_book(title, author, release_year, num_pages)
+                category = input("Kategori: ")
+                result = self.add_book(title, author, release_year, num_pages, category)
                 print(result)
 
             elif choice == "3":

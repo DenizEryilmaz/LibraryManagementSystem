@@ -99,6 +99,14 @@
         <input type="text" id="release_year" name="release_year"><br><br>
         <label for="num_pages">Sayfa Sayısı:</label>
         <input type="text" id="num_pages" name="num_pages"><br><br>
+        <label for="category">Kategori:</label>
+        <select id="category" name="category">
+            <option value="Roman">Roman</option>
+            <option value="Öykü">Öykü</option>
+            <option value="Deneme">Deneme</option>
+            <option value="Bilim Kurgu">Bilim Kurgu</option>
+            <option value="Fantastik">Fantastik</option>
+        </select><br><br>
         <input type="submit" value="Kitap Ekle">
     </form>
     <a href="{{ url_for('index') }}" class="btn-home">Ana Sayfaya Dön</a>

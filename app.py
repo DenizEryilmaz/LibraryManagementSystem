@@ -10,25 +10,70 @@ app.secret_key = b'key'
 def index():
     return render_template('index.html')
 
-@app.route('/list_books')
+
+@app.route('/list_books', methods=['GET', 'POST'])
 def list_books():
-    books = lib.list_books()
-    formatted_books = []
-    for book in books:
-        book_info = book.split(", ")
-        book_id = book_info[0].strip()
-        book_title = book_info[1].strip()
-        book_author = book_info[2].strip()
-        book_year = book_info[3].strip()
-        book_pages = book_info[4].strip()
-        formatted_books.append({
-            "id": book_id,
-            "title": book_title,
-            "author": book_author,
-            "year": book_year,
-            "pages": book_pages
-        })
-    return render_template('list_books.html', books=formatted_books)
+    if request.method == 'POST':
+        author = request.form.get('author')
+        category = request.form.get('category')
+
+        books = lib.list_books()
+        filtered_books = []
+        categories = set()
+
+        for book in books:
+            book_info = book.split(", ")
+            book_author = book_info[2].strip()
+            book_category = book_info[5].strip()
+
+            author_matches = not author or any(
+                author.lower() in author_name.lower() for author_name in book_author.split("/"))
+            category_matches = not category or any(
+                category.lower() == category_name.lower() for category_name in book_category.split("/"))
+
+            if author_matches and category_matches:
+                filtered_books.append({
+                    "id": book_info[0].strip(),
+                    "title": book_info[1].strip(),
+                    "author": book_author,
+                    "year": book_info[3].strip(),
+                    "pages": book_info[4].strip(),
+                    "category": book_category
+                })
+
+
+                categories.update(category_name.title() for category_name in book_category.split("/"))
+
+
+        categories = sorted(categories)
+
+        return render_template('list_books.html', books=filtered_books, categories=categories)
+
+    else:
+        books = lib.list_books()
+        formatted_books = []
+        categories = set()
+
+        for book in books:
+            book_info = book.split(", ")
+            book_author = book_info[2].strip()
+            book_category = book_info[5].strip()
+            formatted_books.append({
+                "id": book_info[0].strip(),
+                "title": book_info[1].strip(),
+                "author": book_author,
+                "year": book_info[3].strip(),
+                "pages": book_info[4].strip(),
+                "category": book_category
+            })
+
+
+            categories.update(book_category.split("/"))
+
+
+        categories = sorted(categories)
+
+        return render_template('list_books.html', books=formatted_books, categories=categories)
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
@@ -38,12 +83,14 @@ def add_book():
         author = request.form['author']
         release_year = request.form['release_year']
         num_pages = request.form['num_pages']
-        result = lib.add_book(title, author, release_year, num_pages)
+        category = request.form['category']
+        result = lib.add_book(title, author, release_year, num_pages, category)
         if result != "Kitap başarıyla eklendi.":
             error = result
         else:
             return redirect(url_for('list_books'))
     return render_template('add_book.html', error=error)
+
 
 @app.route('/remove_book', methods=['GET', 'POST'])
 def remove_book():
