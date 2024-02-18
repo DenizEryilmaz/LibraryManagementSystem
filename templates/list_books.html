@@ -112,7 +112,8 @@
         {% for book in books %}
             <tr>
                 <td>{{ book.id }}</td>
-                <td><a href="{{ url_for('book_detail', book_name=book.title) }}">{{ book.title }}</a></td>
+               <td><a href="{{ url_for('book_detail', book_name=book.author + '+' + book.title) }}">{{ book.title }}</a></td>
+
                 <td>{{ book.author }}</td>
                 <td>{{ book.year }}</td>
                 <td>{{ book.pages }}</td>

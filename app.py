@@ -147,7 +147,8 @@ def book_detail(book_name):
         return render_template('detail_not_found.html')
 
 def get_book_details(book_name):
-    url = f"https://www.goodreads.com/search?q={book_name}&search_type=books"
+    author, title = book_name.split("+")
+    url = f"https://www.goodreads.com/search?q={author}+{title}&search_type=books"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -171,6 +172,7 @@ def get_book_details(book_name):
                 }
 
     return None
+
 
 
 if __name__ == '__main__':
