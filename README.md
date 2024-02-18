@@ -2,6 +2,8 @@
 Bu uygulama, Akbank Yeni Nesil Proje Kampı için geliştirilmiş olan basit bir kütüphane yönetimi uygulamasıdır.
 
 ## Webde kullanıldığı durumda kitap özetleri sayfalarına ve filtreleme özelliklerine erişilebilir.
+#### Not:Özet sayfasına erişmek uzun sürebilir.
+#### (Yaklaşık 10 saniye)
 ### Gerekli kütüphaneleri kurun:
     pip install flask
     pip install requests
