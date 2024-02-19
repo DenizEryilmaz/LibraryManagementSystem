@@ -161,7 +161,7 @@ class Library:
                 sys.exit()
 
             else:
-                    print("Hatalı giriş yaptınız.")
+                print("Hatalı giriş yaptınız.")
 
 
 if __name__ == "__main__":
