@@ -1,3 +1,4 @@
+import sys
 class Library:
     def __init__(self):
         self.books_file = "books.txt"
@@ -133,8 +134,10 @@ class Library:
             print("1) Kitapları Listele")
             print("2) Kitap Ekle")
             print("3) Kitap Sil")
+            print("4) Çıkış")
+            choice = input("Bir menü seçiniz. (1-4): ")
 
-            choice = input("Bir menü seçiniz. (1-3): ")
+
 
             if choice == "1":
                 self.print_books()
@@ -153,8 +156,12 @@ class Library:
                 result = self.remove_book(id)
                 print(result)
 
+            elif choice == "4":
+                print("Program kapatıldı.")
+                sys.exit()
+
             else:
-                print("Hatalı giriş yaptınız.")
+                    print("Hatalı giriş yaptınız.")
 
 
 if __name__ == "__main__":
